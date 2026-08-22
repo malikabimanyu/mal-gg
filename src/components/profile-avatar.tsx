@@ -24,6 +24,48 @@ export function ProfileAvatar() {
     if (pop.current) pop.current.volume = POP_VOLUME;
   }, []);
 
+  /**
+   * Browser menolak memutar audio sampai pengguna berinteraksi dengan halaman,
+   * dan hover tidak dihitung sebagai interaksi. Akibatnya suara hover baru
+   * hidup entah kapan — begitu pengguna kebetulan mengklik sesuatu.
+   *
+   * Di interaksi pertama (klik, sentuh, atau tombol keyboard), elemen audionya
+   * "dibuka" sekali: diputar dalam keadaan bisu lalu langsung dihentikan.
+   * Setelah itu hover berikutnya pasti berbunyi. iOS malah mewajibkan tiap
+   * elemen audio dibuka lewat gestur seperti ini.
+   */
+  useEffect(() => {
+    let sudah = false;
+
+    const buka = () => {
+      const sound = pop.current;
+      if (sudah || !sound) return;
+      sudah = true;
+
+      const volumeAsli = sound.volume;
+      sound.volume = 0;
+      const pulihkan = () => {
+        sound.pause();
+        sound.currentTime = 0;
+        sound.volume = volumeAsli;
+      };
+      sound.play().then(pulihkan, pulihkan);
+
+      lepas();
+    };
+
+    const lepas = () => {
+      document.removeEventListener("pointerdown", buka);
+      document.removeEventListener("touchstart", buka);
+      document.removeEventListener("keydown", buka);
+    };
+
+    document.addEventListener("pointerdown", buka);
+    document.addEventListener("touchstart", buka);
+    document.addEventListener("keydown", buka);
+    return lepas;
+  }, []);
+
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
