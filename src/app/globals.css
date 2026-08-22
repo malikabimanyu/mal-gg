@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warna — diambil langsung dari Figma "Desktop - 1" */
+  --color-page: #fafafa;
+  --color-card: #ffffff;
+  --color-hairline: #f3f3f3;
+  --color-rule: #d9d9d9;
+  --color-board: #fafafa;
+  --color-board-dot: #e6e6e6;
+  --color-ink: #000000;
+  --color-ink-strong: #101828;
+  --color-muted: #a3a3a3;
+
+  --color-ink-soft: #5c5c5c;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-gasoek), ui-sans-serif, system-ui, sans-serif;
+
+  /* Shadow ganda milik tombol "Hire Us" / "Say hi" */
+  --shadow-pill: 0 0 0 2.266px rgb(0 0 0 / 0.06), 0 6.591px 6.591px 0 rgb(38 45 58 / 0.08);
+  --shadow-pill-hover: 0 0 0 2.266px rgb(0 0 0 / 0.08), 0 10px 12px 0 rgb(38 45 58 / 0.12);
+
+  /* Tooltip funding (Figma node 176:227) */
+  --shadow-tooltip: 0 1px 2px 0 rgb(40 40 40 / 0.08), 0 0 0 1px #ececec;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Kondisi awal untuk entrance animation (lihat components/reveal.tsx).
+   Dibungkus media query supaya user reduced-motion langsung lihat konten. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+  }
+}
+
+/* Fade tipis di kiri-kanan strip logo supaya potongannya tidak kasar. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 24px,
+    #000 calc(100% - 24px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 24px,
+    #000 calc(100% - 24px),
+    transparent 100%
+  );
+}
+
+/* Latar papan permainan kartu — dot grid dari Figma (node 176:1099):
+   titik 2px berwarna #e6e6e6 di atas #fafafa, pada kisi 9px.
+   Dibuat dengan CSS, bukan gambar, supaya tetap tajam dan ikut ukuran kotak. */
+.board-dots {
+  background-color: var(--color-board);
+  background-image: radial-gradient(
+    circle,
+    var(--color-board-dot) 1px,
+    transparent 1px
+  );
+  background-size: 9px 9px;
+  /* fase disamakan dengan Figma: titik pertama berpusat di (11, 9.4) */
+  background-position: 6.5px 4.9px;
+}
