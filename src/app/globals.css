@@ -77,3 +77,94 @@ body {
   /* fase disamakan dengan Figma: titik pertama berpusat di (11, 9.4) */
   background-position: 6.5px 4.9px;
 }
+
+/* =========================================================================
+   Bretford dashboard (/bretford/library) — tokens from the Figma "TWITTER"
+   file. Names mirror the Figma variables (text/loud, border/soft, …) and are
+   distinct from the site's own tokens above; only this route uses them.
+   ========================================================================= */
+:root {
+  --text-loud: #171717;
+  --text-normal: #5c5c5c;
+  --text-soft: #a3a3a3;
+  --icon-soft: #a3a3a3;
+
+  --border-soft: #ebebeb;
+  --border-line: #ececec;
+  --border-warm: #e9e5e2;
+
+  --background-base: #f0f0f0;
+  --background-disable: #f7f7f7;
+  --background-subtle: #fbfbfb;
+  --background-tab: #f3f3f3;
+
+  --primary-500: #2d90ff;
+  --success-500: #32d583;
+}
+
+@theme inline {
+  /* colors → text-loud / bg-base / border-line-soft … */
+  --color-loud: var(--text-loud);
+  --color-normal: var(--text-normal);
+  --color-soft: var(--text-soft);
+  --color-icon-soft: var(--icon-soft);
+
+  --color-line: var(--border-line);
+  --color-line-soft: var(--border-soft);
+  --color-line-warm: var(--border-warm);
+
+  --color-base: var(--background-base);
+  --color-disable: var(--background-disable);
+  --color-subtle: var(--background-subtle);
+  --color-tab: var(--background-tab);
+
+  --color-primary: var(--primary-500);
+  --color-success: var(--success-500);
+
+  /* accent colors used by stat-card icon tiles, status dots, source pills */
+  --color-accent-blue: #429bff;
+  --color-accent-pink: #ff2bf8;
+  --color-accent-indigo: #656ce8;
+  --color-accent-green: #18c669;
+  --color-accent-orange: #ffa100;
+  --color-tint-green: #e4fcef;
+  --color-tint-blue: #e0efff;
+  --color-tint-orange: #fff4e0;
+  --color-tint-avatar: #d4e0fb;
+
+  /* elevation → shadow-card / shadow-panel … (all include a 1px ring) */
+  --shadow-card: 0px 1px 2px 0px rgba(40, 40, 40, 0.08), 0px 0px 0px 1px #ececec;
+  --shadow-card-soft: 0px 1px 2px 0px rgba(40, 40, 40, 0.08), 0px 0px 0px 1px #ebebeb;
+  --shadow-btn: 0px 1px 2px 0px rgba(9, 9, 11, 0.08), 0px 0px 0px 1px #ebebeb;
+  --shadow-panel: 0px 2px 4px 0px rgba(35, 35, 35, 0.03), 0px 1px 2px 0px rgba(35, 35, 35, 0.04), 0px 0px 0px 1px #e9e5e2;
+  --shadow-glow: inset 0px 1px 20px 0px rgba(255, 255, 255, 0.16);
+  --shadow-tile: inset 0px -2px 3px 0px rgba(0, 0, 0, 0.08);
+
+  --radius-card: 16px;
+  --radius-panel: 24px;
+
+  /* Geist is loaded by app/bretford/library/layout.tsx; the site keeps Inter as --font-sans */
+  --font-bretford: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Figma draws section dividers as *inside* strokes, so a 64px header is
+   16 + 32 + 16 with the 1px line painted over the padding. `border-b` would
+   make it 65px; these inset hairlines keep the box height exact. */
+@utility rule-b {
+  box-shadow: inset 0 -1px 0 0 var(--border-soft);
+}
+@utility rule-r {
+  box-shadow: inset -1px 0 0 0 var(--border-soft);
+}
+
+/* Elements animated by anime.js start hidden so they don't flash before the
+   entrance timeline runs. Gated on the PageMotion root's `js` class (added
+   before first paint) so content stays visible when JS is off or fails. */
+[data-page-motion].js [data-motion] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-page-motion].js [data-motion] {
+    opacity: 1;
+  }
+}

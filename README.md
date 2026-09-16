@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Buka http://localhost:3000.
+Buka http://localhost:3000. Dashboard Bretford ada di http://localhost:3000/bretford/library.
 
 ## Susunan
 
@@ -19,7 +19,9 @@ src/
   components/  profile-avatar · action-buttons · card-game
                bio-block · logo-marquee · divider · project-list · reveal
   lib/         site.ts (semua konten & tautan) · cards.ts · motion.ts
-public/        logos · cards · icons · profile · audio
+  app/bretford/library/  dashboard Bretford (route + layout Geist)
+  bretford/    komponen, primitives, data, dan motion milik dashboard
+public/        logos · cards · icons · profile · audio · bretford/ (aset dashboard)
 ```
 
 Semua teks, tautan, dan daftar logo ada di `src/lib/site.ts` — ubah di situ, bukan di komponen.
