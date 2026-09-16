@@ -5,7 +5,7 @@ import type { NextConfig } from "next";
  * Semua permintaan ke /bretford/library di mal.gg diteruskan ke sana tanpa
  * mengubah URL di browser pengunjung.
  */
-const BRETFORD_ZONE = "https://<domain-vercel-bretford>";
+const BRETFORD_ZONE = "https://bretford-library.vercel.app";
 
 const nextConfig: NextConfig = {
   async rewrites() {
