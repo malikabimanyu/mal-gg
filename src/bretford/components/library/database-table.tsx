@@ -26,7 +26,7 @@ const td = "px-3 py-[10px] align-middle";
  */
 export function DatabasePanel() {
   return (
-    <section className="flex h-full min-w-0 flex-1 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft">
+    <section className="flex h-full min-w-0 flex-1 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft max-md:h-auto">
       <div className="flex items-center gap-2">
         <h2 className="min-w-0 flex-1 text-[16px] font-medium leading-none text-loud">Database</h2>
         <Button variant="ghost" aria-label="Expand database">
@@ -34,79 +34,83 @@ export function DatabasePanel() {
         </Button>
       </div>
 
-      <table className="w-full table-fixed border-separate border-spacing-0">
-        <colgroup>
-          <col className="w-[240px]" />
-          <col />
-          <col />
-          <col className="w-[56px]" />
-        </colgroup>
+      {/* Mobile: the fixed 240px Name column does not fit the 327px panel, so the
+          table scrolls sideways inside it (native thin scrollbar, no JS). */}
+      <div className="max-md:overflow-x-auto max-md:[scrollbar-width:thin]">
+        <table className="w-full table-fixed border-separate border-spacing-0 max-md:min-w-[560px]">
+          <colgroup>
+            <col className="w-[240px]" />
+            <col />
+            <col />
+            <col className="w-[56px]" />
+          </colgroup>
 
-        <thead>
-          <tr>
-            <th scope="col" className={cn(th, "rounded-l-[14px]")}>
-              Name
-            </th>
-            <th scope="col" className={th}>
-              Record
-            </th>
-            <th scope="col" className={th}>
-              Status
-            </th>
-            <th scope="col" className={cn(th, "rounded-r-[14px]")} />
-          </tr>
-        </thead>
+          <thead>
+            <tr>
+              <th scope="col" className={cn(th, "rounded-l-[14px]")}>
+                Name
+              </th>
+              <th scope="col" className={th}>
+                Record
+              </th>
+              <th scope="col" className={th}>
+                Status
+              </th>
+              <th scope="col" className={cn(th, "rounded-r-[14px]")} />
+            </tr>
+          </thead>
 
-        <tbody>
-          {databases.map((row, i) => {
-            const t = tile[row.status];
-            // Every row but the last has a 1px soft rule underneath (as in the design).
-            // Drawn as an inset shadow rather than border-b: Blink adds a cell's border
-            // outside the row's specified height, which would make rows 53px instead of 52.
-            const rule = i < databases.length - 1 && "shadow-[inset_0_-1px_0_0_var(--border-soft)]";
+          <tbody>
+            {databases.map((row, i) => {
+              const t = tile[row.status];
+              // Every row but the last has a 1px soft rule underneath (as in the design).
+              // Drawn as an inset shadow rather than border-b: Blink adds a cell's border
+              // outside the row's specified height, which would make rows 53px instead of 52.
+              const rule = i < databases.length - 1 && "shadow-[inset_0_-1px_0_0_var(--border-soft)]";
 
-            return (
-              <tr key={row.name} data-motion="db-row" className="h-[52px]">
-                <td className={cn(td, rule)}>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={cn("flex size-6 shrink-0 items-center justify-center rounded-[6px]", t.bg)}
+              return (
+                <tr key={row.name} data-motion="db-row" className="h-[52px]">
+                  <td className={cn(td, rule)}>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={cn("flex size-6 shrink-0 items-center justify-center rounded-[6px]", t.bg)}
+                      >
+                        <Icon name={t.icon} size={12} />
+                      </span>
+                      <span className="min-w-0 flex-1 truncate text-[14px] font-medium leading-none text-loud">
+                        {row.name}
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className={cn(td, rule, "text-[14px] font-medium leading-none whitespace-nowrap text-normal")}>
+                    {row.records}
+                  </td>
+
+                  <td className={cn(td, rule)}>
+                    <div className="flex items-center">
+                      <StatusBadge status={row.status} />
+                    </div>
+                  </td>
+
+                  <td className={cn(td, rule)}>
+                    <button
+                      type="button"
+                      aria-label="Row actions"
+                      className={cn(
+                        "mx-auto flex size-8 items-center justify-center rounded-[8px] outline-none",
+                        "transition-colors duration-200 hover:bg-subtle focus-visible:ring-2 focus-visible:ring-primary/40",
+                      )}
                     >
-                      <Icon name={t.icon} size={12} />
-                    </span>
-                    <span className="min-w-0 flex-1 truncate text-[14px] font-medium leading-none text-loud">
-                      {row.name}
-                    </span>
-                  </div>
-                </td>
-
-                <td className={cn(td, rule, "text-[14px] font-medium leading-none whitespace-nowrap text-normal")}>
-                  {row.records}
-                </td>
-
-                <td className={cn(td, rule)}>
-                  <div className="flex items-center">
-                    <StatusBadge status={row.status} />
-                  </div>
-                </td>
-
-                <td className={cn(td, rule)}>
-                  <button
-                    type="button"
-                    aria-label="Row actions"
-                    className={cn(
-                      "mx-auto flex size-8 items-center justify-center rounded-[8px] outline-none",
-                      "transition-colors duration-200 hover:bg-subtle focus-visible:ring-2 focus-visible:ring-primary/40",
-                    )}
-                  >
-                    <Icon name="dots-horizontal" />
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                      <Icon name="dots-horizontal" />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }

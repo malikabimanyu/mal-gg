@@ -27,7 +27,7 @@ export function SourcesSection() {
         </Button>
       </div>
 
-      <ul className="flex w-full items-center gap-4">
+      <ul className="flex w-full items-center gap-4 max-md:flex-col max-md:items-stretch">
         {sources.map((source) => (
           <SourceCard key={source.slug} source={source} />
         ))}

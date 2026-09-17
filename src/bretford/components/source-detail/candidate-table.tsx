@@ -2,6 +2,7 @@ import { Avatar } from "@/bretford/components/ui/avatar";
 import { Tag } from "@/bretford/components/ui/badge";
 import { Icon } from "@/bretford/components/ui/icon";
 import { PanelHeader } from "@/bretford/components/source-detail/panel-header";
+import { TableScroller } from "@/bretford/components/ui/table-scroller";
 import { formatJoinDate, type Candidate, type Member } from "@/bretford/lib/sources-data";
 import { cn } from "@/bretford/lib/cn";
 
@@ -33,75 +34,79 @@ export function CandidateTable({ candidates, members }: { candidates: Candidate[
   return (
     <section
       data-motion="panel"
-      className="flex w-full shrink-0 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft"
+      className="flex w-full shrink-0 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft max-md:h-auto"
     >
       <PanelHeader icon="users-tile" title="Candidate" />
 
-      <table className="w-full table-fixed border-separate border-spacing-0">
-        <colgroup>
-          <col className="w-[300px]" />
-          <col className="w-[140px]" />
-          <col className="w-[140px]" />
-          <col />
-        </colgroup>
+      {/* Below md the columns keep their widths and the wrapper scrolls sideways;
+         TableScroller draws the slim scroll track from the mobile frame under it. */}
+      <TableScroller>
+        <table className="w-full table-fixed border-separate border-spacing-0 max-md:min-w-[720px]">
+          <colgroup>
+            <col className="w-[300px] max-md:w-[240px]" />
+            <col className="w-[140px]" />
+            <col className="w-[140px]" />
+            <col />
+          </colgroup>
 
-        <thead>
-          <tr>
-            <th scope="col" className={cn(th, "rounded-l-[12px]")}>
-              Candidate
-            </th>
-            <th scope="col" className={th}>
-              Created by
-            </th>
-            <th scope="col" className={th}>
-              Join
-            </th>
-            <th scope="col" className={cn(th, "rounded-r-[12px]")}>
-              LinkedIn
-            </th>
-          </tr>
-        </thead>
+          <thead>
+            <tr>
+              <th scope="col" className={cn(th, "rounded-l-[12px]")}>
+                Candidate
+              </th>
+              <th scope="col" className={th}>
+                Created by
+              </th>
+              <th scope="col" className={th}>
+                Join
+              </th>
+              <th scope="col" className={cn(th, "rounded-r-[12px]")}>
+                LinkedIn
+              </th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {candidates.map((candidate, i) => {
-            const creator = memberByName.get(candidate.createdBy)?.name ?? candidate.createdBy;
-            // Every row but the last has a 1px soft rule underneath (`rule-b`, the
-            // inset hairline) rather than border-b so the row stays exactly 60px.
-            const rule = i < candidates.length - 1 && "rule-b";
+          <tbody>
+            {candidates.map((candidate, i) => {
+              const creator = memberByName.get(candidate.createdBy)?.name ?? candidate.createdBy;
+              // Every row but the last has a 1px soft rule underneath (`rule-b`, the
+              // inset hairline) rather than border-b so the row stays exactly 60px.
+              const rule = i < candidates.length - 1 && "rule-b";
 
-            return (
-              <tr key={candidate.linkedin} data-motion="candidate-row" className="h-[60px]">
-                <td className={cn(td, rule)}>
-                  <div className="flex items-center gap-3">
-                    <Avatar name={candidate.name} src={candidate.photo} />
-                    <div className="flex min-w-0 flex-col gap-[6px] leading-none whitespace-nowrap">
-                      <span className="truncate text-[14px] font-medium text-loud">{candidate.name}</span>
-                      <span className="truncate text-[12px] font-normal text-soft">{candidate.role}</span>
+              return (
+                <tr key={candidate.linkedin} data-motion="candidate-row" className="h-[60px]">
+                  <td className={cn(td, rule)}>
+                    <div className="flex items-center gap-3">
+                      <Avatar name={candidate.name} src={candidate.photo} />
+                      <div className="flex min-w-0 flex-col gap-[6px] leading-none whitespace-nowrap">
+                        <span className="truncate text-[14px] font-medium text-loud">{candidate.name}</span>
+                        <span className="truncate text-[12px] font-normal text-soft">{candidate.role}</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                <td className={cn(td, rule)}>
-                  <div className="flex items-center">
-                    <Tag>{creator}</Tag>
-                  </div>
-                </td>
+                  <td className={cn(td, rule)}>
+                    <div className="flex items-center">
+                      <Tag>{creator}</Tag>
+                    </div>
+                  </td>
 
-                <td className={cn(td, rule, "text-[14px] font-medium leading-none whitespace-nowrap text-normal")}>
-                  {formatJoinDate(candidate.joined)}
-                </td>
+                  <td className={cn(td, rule, "text-[14px] font-medium leading-none whitespace-nowrap text-normal")}>
+                    {formatJoinDate(candidate.joined)}
+                  </td>
 
-                <td className={cn("px-2 py-[10px] align-middle", rule)}>
-                  <a href={candidate.linkedin} target="_blank" rel="noreferrer" className={linkButton}>
-                    <span className="min-w-0 flex-1 truncate">{candidate.linkedin}</span>
-                    <Icon name="copy" size={14} />
-                  </a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  <td className={cn("px-2 py-[10px] align-middle", rule)}>
+                    <a href={candidate.linkedin} target="_blank" rel="noreferrer" className={linkButton}>
+                      <span className="min-w-0 flex-1 truncate">{candidate.linkedin}</span>
+                      <Icon name="copy" size={14} />
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </TableScroller>
     </section>
   );
 }

@@ -16,7 +16,7 @@ const toneStyle: Record<Stat["tone"], string> = {
 export function StatsRow() {
   return (
     <div className="w-full shrink-0 rule-b p-4">
-      <div className="flex w-full items-center gap-4">
+      <div className="flex w-full items-center gap-4 max-md:flex-col max-md:items-stretch">
         {stats.map((stat) => (
           <StatCard key={stat.label} stat={stat} />
         ))}

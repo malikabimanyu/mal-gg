@@ -13,7 +13,8 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: PageProps<"/bretford/library/sources/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const detail = getSourceDetail(slug);
-  return { title: detail ? `${detail.title} — Library · Bretford` : "Source not found" };
+  // the /bretford/library layout appends " · Bretford" via its title template
+  return { title: detail ? `${detail.title} — Library` : "Source not found" };
 }
 
 export default async function SourcePage({ params }: PageProps<"/bretford/library/sources/[slug]">) {

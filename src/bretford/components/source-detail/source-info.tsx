@@ -45,18 +45,27 @@ function connectionsLabel(connections: number) {
  * Left info column of the source-detail panel (Figma 866:7266): fixed 320px,
  * three stacked blocks — title row, About / Privacy / Direct search link,
  * and the member list with the Invite action. Everything comes from `detail`.
+ * Below md it becomes a full-width block that stacks above the tables (no
+ * right rule, grows with its content instead of scrolling).
  */
 export function SourceInfo({ detail }: { detail: SourceDetail }) {
   return (
-    <aside className="flex h-full w-[320px] shrink-0 flex-col overflow-y-auto rule-r">
+    // Below md the frame stacks the three blocks with a 4px gap between them (834:23503)
+    <aside className="flex h-full w-[320px] shrink-0 flex-col overflow-y-auto max-md:h-auto max-md:w-full max-md:gap-1 max-md:overflow-visible md:rule-r">
       {/* Title row: 20px glyph + 14px semibold title, options button on the right */}
       <div data-motion="info-block" className={cn(block, "flex shrink-0 items-center gap-4")}>
         <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
           <SourceGlyph icon={detail.icon} />
           <h2 className="text-[14px] leading-none font-semibold whitespace-nowrap text-loud">{detail.title}</h2>
         </div>
-        <Button variant="ghost" aria-label="Source options">
-          <Icon name="dots-horizontal-strong" />
+        {/* Ghost on desktop; the mobile frame draws it as a 36px secondary pill with a vertical glyph */}
+        <Button
+          variant="ghost"
+          aria-label="Source options"
+          className="max-md:rounded-[11px] max-md:border-0 max-md:p-[11px] max-md:shadow-card"
+        >
+          <Icon name="dots-horizontal-strong" className="max-md:hidden" />
+          <Icon name="dots-vertical" className="md:hidden" />
         </Button>
       </div>
 
@@ -114,8 +123,10 @@ export function SourceInfo({ detail }: { detail: SourceDetail }) {
 
                 <div className="flex min-w-0 flex-1 flex-col justify-center gap-2 self-stretch overflow-hidden leading-none whitespace-nowrap">
                   <p className="text-[14px] font-medium text-loud">{member.name}</p>
+                  {/* Desktop shows the upload count; the mobile frame shows the email instead */}
                   <p className="text-[12px] font-normal text-normal">
-                    {connectionsLabel(member.connections)}
+                    <span className="max-md:hidden">{connectionsLabel(member.connections)}</span>
+                    <span className="md:hidden">{member.email}</span>
                   </p>
                 </div>
 

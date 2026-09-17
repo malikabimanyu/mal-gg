@@ -15,7 +15,7 @@ export function GroupsPanel() {
   return (
     <section
       aria-labelledby="groups-title"
-      className="flex h-full min-w-0 flex-1 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft"
+      className="flex h-full min-w-0 flex-1 flex-col gap-4 overflow-clip rounded-card bg-white p-4 shadow-card-soft max-md:h-auto"
     >
       <div className="flex w-full items-center justify-between">
         <h2 id="groups-title" className="text-[16px] leading-none font-medium whitespace-nowrap text-loud">
@@ -63,7 +63,8 @@ export function GroupsPanel() {
                   </span>
                 </span>
 
-                <Icon name="chevron-right" />
+                {/* The mobile frame has no trailing chevron on group rows. */}
+                <Icon name="chevron-right" className="max-md:hidden" />
               </button>
             </li>
           );

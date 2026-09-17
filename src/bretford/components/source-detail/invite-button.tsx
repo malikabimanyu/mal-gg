@@ -23,7 +23,8 @@ export function InviteButton() {
 
   return (
     <>
-      <Button variant="secondary" className="w-full" onClick={() => setOpen(true)}>
+      {/* The mobile frame keeps this full-width button at the 32px desktop size (834:23545) */}
+      <Button variant="secondary" touch={false} className="w-full" onClick={() => setOpen(true)}>
         <Icon name="user-plus-01" size={14} />
         Invite
       </Button>

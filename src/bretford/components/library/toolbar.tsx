@@ -69,14 +69,14 @@ export function LibraryToolbar() {
   }, []);
 
   return (
-    <div className="flex w-full shrink-0 items-center justify-between rule-b p-4">
+    <div className="flex w-full shrink-0 items-center justify-between rule-b p-4 max-md:flex-wrap max-md:gap-y-2">
       {/* Segmented control */}
       <div
         ref={control}
         role="tablist"
         aria-label="Library view"
         data-motion="toolbar-tabs"
-        className="relative flex shrink-0 items-center gap-[2px] rounded-[12px] bg-tab p-px"
+        className="relative flex shrink-0 items-center gap-[2px] rounded-[12px] bg-tab p-px max-md:rounded-[11px]"
       >
         {/* Sliding active pill: 30px tall inside the 1px padding, positioned via inline transform/width */}
         <span
@@ -102,7 +102,10 @@ export function LibraryToolbar() {
                 "relative flex shrink-0 items-center justify-center overflow-clip whitespace-nowrap select-none",
                 "text-[14px] font-medium leading-none transition-colors duration-200",
                 "outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-                active ? "rounded-[10px] px-4 py-2 text-loud" : "rounded-[8px] p-2 text-normal hover:text-loud",
+                // Mobile: 34px tall pills (10px vertical padding) inside the 36px control
+                active
+                  ? "rounded-[10px] px-4 py-2 text-loud max-md:py-[10px]"
+                  : "rounded-[8px] p-2 text-normal hover:text-loud max-md:rounded-[10px] max-md:py-[10px]",
               )}
             >
               {active ? (
@@ -115,19 +118,19 @@ export function LibraryToolbar() {
         })}
       </div>
 
-      {/* Actions */}
-      <div className="flex shrink-0 items-center gap-2">
+      {/* Actions — below ~368px they wrap under the tabs (right-aligned) instead of overlapping them */}
+      <div className="flex shrink-0 items-center gap-2 max-md:ml-auto">
         <Button variant="secondary" data-motion="toolbar-action">
           <Icon name="users-plus" size={14} />
-          New group
+          <span className="max-md:sr-only">New group</span>
         </Button>
         <Button variant="secondary" data-motion="toolbar-action">
           <Icon name="package-plus" size={14} />
-          New database
+          <span className="max-md:sr-only">New database</span>
         </Button>
         <Button variant="secondary" data-motion="toolbar-action">
           <Icon name="settings-04" size={14} />
-          <span>
+          <span className="max-md:sr-only">
             {"Order by: "}
             <span className="text-loud">{orderBy}</span>
           </span>

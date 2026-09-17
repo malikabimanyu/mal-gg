@@ -78,7 +78,8 @@ export function Toast({ message, onDismiss, duration = 5000 }: ToastProps) {
       aria-live="polite"
       onMouseEnter={pause}
       onMouseLeave={arm}
-      className="fixed right-6 bottom-6 z-50 flex w-[420px] max-w-[calc(100vw-48px)] items-center gap-2 overflow-clip rounded-[10px] border border-primary bg-[#eaf4ff] px-[11px] py-[11px] opacity-0 shadow-[0px_6px_10px_0px_rgba(0,0,0,0.06),0px_4px_32px_0px_rgba(0,0,0,0.12)]"
+      // Mobile: spans the screen with 16px margins instead of the 420px bottom-right pill.
+      className="fixed right-6 bottom-6 z-50 flex w-[420px] max-w-[calc(100vw-48px)] items-center gap-2 overflow-clip rounded-[10px] border border-primary bg-[#eaf4ff] px-[11px] py-[11px] opacity-0 shadow-[0px_6px_10px_0px_rgba(0,0,0,0.06),0px_4px_32px_0px_rgba(0,0,0,0.12)] max-md:inset-x-4 max-md:bottom-4 max-md:w-auto max-md:max-w-none"
     >
       <p className="min-w-0 flex-1 truncate text-[14px] leading-5 font-medium text-primary">{message}</p>
       <button

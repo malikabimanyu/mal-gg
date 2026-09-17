@@ -13,6 +13,12 @@ type ButtonProps = ComponentProps<"button"> & {
   variant?: Variant;
   /** md — 32px toolbar pill (default). lg — 44px, radius 14, used for dialog footers. */
   size?: Size;
+  /**
+   * Below `md` the md primary/secondary pills grow to 36px touch targets (radius 11).
+   * Pass `false` for the few md buttons the mobile frames keep at 32px (e.g. the
+   * full-width Invite button).
+   */
+  touch?: boolean;
 };
 
 const base =
@@ -31,6 +37,8 @@ const variants: Record<Variant, string> = {
 
 // md: every variant is 32px tall — 14px icon/text + 9px per side. Figma draws the
 // bordered variants' 1px stroke *inside* that 9px, hence `p-2` for them.
+// Below md the mobile frames grow primary/secondary to 36px (11px padding,
+// radius 11) for touch; ghost "expand" buttons stay 32px.
 const sizes: Record<Size, Record<Variant, string>> = {
   md: {
     primary: "rounded-[10px] p-2 leading-none",
@@ -44,16 +52,26 @@ const sizes: Record<Size, Record<Variant, string>> = {
   },
 };
 
+const touchSizes: Partial<Record<Variant, string>> = {
+  primary: "max-md:rounded-[11px] max-md:p-[10px]",
+  secondary: "max-md:rounded-[11px] max-md:p-[11px]",
+};
+
 export function Button({
   variant = "secondary",
   size = "md",
+  touch = true,
   className,
   children,
   type = "button",
   ...rest
 }: ButtonProps) {
   return (
-    <button type={type} className={cn(base, variants[variant], sizes[size][variant], className)} {...rest}>
+    <button
+      type={type}
+      className={cn(base, variants[variant], sizes[size][variant], size === "md" && touch && touchSizes[variant], className)}
+      {...rest}
+    >
       {children}
       {variant === "primary" && (
         // Top-edge highlight from the design (inset white glow)

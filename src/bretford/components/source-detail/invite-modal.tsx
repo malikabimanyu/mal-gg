@@ -195,7 +195,9 @@ export function InviteModal({ open, onClose, onSent }: InviteModalProps) {
         requestClose();
       }}
       onClose={onNativeClose}
-      className="fixed inset-0 m-0 h-dvh w-dvw max-h-none max-w-none overflow-visible border-0 bg-transparent p-0 text-loud backdrop:bg-transparent"
+      // Mobile: the dialog itself scrolls when the panel outgrows the viewport (short phones, landscape,
+      // keyboard up, many "Invite more" rows); the overlay goes fixed so it keeps covering the viewport.
+      className="fixed inset-0 m-0 h-dvh w-dvw max-h-none max-w-none overflow-visible border-0 bg-transparent p-0 text-loud backdrop:bg-transparent max-md:overflow-y-auto"
     >
       {/* Blurred, dimmed page behind the panel — a click on it closes, unless it was only dismissing an
           open role menu (like a native <select>, the dismissing click must not also discard the form) */}
@@ -211,21 +213,23 @@ export function InviteModal({ open, onClose, onSent }: InviteModalProps) {
           }
           requestClose();
         }}
-        className="absolute inset-0 bg-[rgba(187,182,182,0.24)] opacity-0 backdrop-blur-[4px]"
+        className="absolute inset-0 bg-[rgba(187,182,182,0.24)] opacity-0 backdrop-blur-[4px] max-md:fixed"
       />
 
-      <div className="pointer-events-none relative flex h-full w-full items-center justify-center">
+      {/* Mobile: min-h-full + my-auto keeps a short panel centred while a tall one scrolls within 20px margins */}
+      <div className="pointer-events-none relative flex h-full w-full items-center justify-center max-md:h-auto max-md:min-h-full max-md:items-start max-md:py-5">
+        {/* Mobile frame (Rolexis): 335px panel on a 375 screen = 20px side margins, no gap between header and body */}
         <div
           ref={panelRef}
-          className="pointer-events-auto flex w-[540px] flex-col gap-[10px] rounded-[20px] bg-white opacity-0 shadow-[0px_2px_40px_0px_rgba(0,0,0,0.08)]"
+          className="pointer-events-auto flex w-[540px] flex-col gap-[10px] rounded-[20px] bg-white opacity-0 shadow-[0px_2px_40px_0px_rgba(0,0,0,0.08)] max-md:my-auto max-md:w-[calc(100vw-40px)] max-md:gap-0"
         >
-          {/* Header */}
-          <div className="flex w-full items-center justify-between p-5 shadow-[inset_0_-1px_0_0_var(--color-line)]">
-            <div className="flex flex-col gap-[6px]">
-              <h2 id={titleId} className="text-[18px] leading-none font-semibold text-loud">
+          {/* Header — mobile: p-4, 16px title / 14px subtitle (both wrap at 1.4), 24px close with a 16px icon */}
+          <div className="flex w-full items-center justify-between p-5 shadow-[inset_0_-1px_0_0_var(--color-line)] max-md:items-start max-md:gap-3 max-md:p-4">
+            <div className="flex flex-col gap-[6px] max-md:min-w-0 max-md:flex-1 max-md:gap-1">
+              <h2 id={titleId} className="text-[18px] leading-none font-semibold text-loud max-md:text-[16px] max-md:leading-[1.4]">
                 Adding Member
               </h2>
-              <p id={descId} className="text-[16px] leading-none font-normal text-normal">
+              <p id={descId} className="text-[16px] leading-none font-normal text-normal max-md:text-[14px] max-md:leading-[1.4]">
                 Invite people to join and contribute to this network.
               </p>
             </div>
@@ -233,14 +237,15 @@ export function InviteModal({ open, onClose, onSent }: InviteModalProps) {
               type="button"
               onClick={requestClose}
               aria-label="Close"
-              className="flex size-8 shrink-0 items-center justify-center rounded-[8px] outline-none transition-colors hover:bg-subtle focus-visible:ring-2 focus-visible:ring-primary/40"
+              className="flex size-8 shrink-0 items-center justify-center rounded-[8px] outline-none transition-colors hover:bg-subtle focus-visible:ring-2 focus-visible:ring-primary/40 max-md:size-6"
             >
-              <Icon name="x-close" size={24} />
+              <Icon name="x-close" size={24} className="max-md:hidden" />
+              <Icon name="x-close" size={16} className="md:hidden" />
             </button>
           </div>
 
           {/* Body */}
-          <form onSubmit={onSubmit} className="flex w-full flex-col gap-6 p-5">
+          <form onSubmit={onSubmit} className="flex w-full flex-col gap-6 p-5 max-md:p-4">
             {/* Inviter name */}
             <Field data-modal-item className="has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-primary/40">
               <input
@@ -301,8 +306,9 @@ export function InviteModal({ open, onClose, onSent }: InviteModalProps) {
               </button>
             </div>
 
-            {/* Footer */}
-            <div data-modal-item className="grid w-full grid-cols-2 gap-3">
+            {/* Footer — mobile stacks the buttons full-width with Send Invite on top (visual order only; the
+                DOM keeps Cancel → Send so Tab still reaches the primary action last) */}
+            <div data-modal-item className="grid w-full grid-cols-2 gap-3 max-md:flex max-md:flex-col">
               <button
                 type="button"
                 onClick={requestClose}
@@ -315,7 +321,7 @@ export function InviteModal({ open, onClose, onSent }: InviteModalProps) {
               >
                 Cancel
               </button>
-              <Button type="submit" variant="primary" size="lg" className="focus-visible:ring-offset-2">
+              <Button type="submit" variant="primary" size="lg" className="focus-visible:ring-offset-2 max-md:order-first">
                 Send Invite
               </Button>
             </div>
