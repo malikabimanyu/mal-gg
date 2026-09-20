@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col gap-4 px-8 py-8 max-md:px-4">
-      <PageHeader total={result.total} universe={result.universe} onePerCompany={query.onePerCompany} />
+      <PageHeader />
       <Suspense>
         <Toolbar filterCount={query.chips.length} />
       </Suspense>
