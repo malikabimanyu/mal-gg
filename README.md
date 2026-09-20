@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Buka http://localhost:3000. Dashboard Bretford ada di http://localhost:3000/bretford/library.
+Buka http://localhost:3000. Dashboard Bretford ada di http://localhost:3000/bretford/library, YC Founder Directory di http://localhost:3000/yc.
 
 ## Susunan
 
@@ -21,7 +21,10 @@ src/
   lib/         site.ts (semua konten & tautan) · cards.ts · motion.ts
   app/bretford/library/  dashboard Bretford (route + layout Geist)
   bretford/    komponen, primitives, data, dan motion milik dashboard
-public/        logos · cards · icons · profile · audio · bretford/ (aset dashboard)
+  app/yc/      YC Founder Directory (page, layout Geist, api/suggest, api/count)
+  yc/          komponen, facet registry, query engine milik directory
+public/        logos · cards · icons · profile · audio · bretford/ · yc/ (ikon directory)
+data/          yc.db — SQLite read-only untuk /yc (hasil pack dari pipeline TWITTER/YC)
 ```
 
 Semua teks, tautan, dan daftar logo ada di `src/lib/site.ts` — ubah di situ, bukan di komponen.

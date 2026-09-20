@@ -168,3 +168,158 @@ body {
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   YC Founder Directory (/yc) — tokens from the Figma "Y-Combinator Data Library"
+   file. Everything is prefixed `yc-` and base styles are scoped to `.yc-root`, so
+   nothing here touches the site or Bretford tokens. Source app: TWITTER/YC/web.
+   ========================================================================== */
+:root {
+  --yc-text-primary: #0a0a0a;
+  --yc-text-secondary: #5b5f66;
+  --yc-text-tertiary: #8a8f98;
+  --yc-text-muted: #737373;
+  --yc-text-link: #1e46d6;
+  --yc-bg-page: #fafafa;
+  --yc-bg-surface: #ffffff;
+  --yc-bg-subtle: #f5f6f7;
+  --yc-bg-hover: #f3f4f6;
+  --yc-bg-selected: #eff3ff;
+  --yc-bg-row-selected: #eef0f3;
+  --yc-border-default: #e4e5e8;
+  --yc-border-strong: #d3d5da;
+  --yc-border-subtle: #efeff1;
+  --yc-accent-indigo: #5b5bf5;
+  --yc-accent-indigo-soft: #efeefe;
+  --yc-accent-blue: #2c5bff;
+  --yc-accent-focus: #3177f0;
+  --yc-tone-green: #0e8f5e;
+  --yc-tone-green-soft: #e9f7f0;
+  --yc-tone-gold: #b7791f;
+  --yc-tone-gold-soft: #fdf4e3;
+  --yc-tone-blue: #2563eb;
+  --yc-tone-blue-soft: #eaf1fe;
+  --yc-tone-orange: #d0622b;
+  --yc-tone-orange-soft: #fdf0e8;
+  --yc-tone-pink: #ce3560;
+  --yc-tone-pink-soft: #fdebf0;
+  --yc-tone-purple: #6a59cc;
+  --yc-tone-purple-soft: #f0edfb;
+  /* card elevation from the design: 1px ring + two soft shadows */
+  --yc-shadow-card: 0 1px 2px 0 rgba(82, 88, 102, 0.06), 0 0 0 1px #e4e5e8, 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  --yc-shadow-popover: 0 12px 32px -8px rgba(15, 23, 41, 0.18), 0 0 0 1px #e4e5e8, 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+}
+
+@theme inline {
+  --color-yc-ink: var(--yc-text-primary);
+  --color-yc-ink-2: var(--yc-text-secondary);
+  --color-yc-ink-3: var(--yc-text-tertiary);
+  --color-yc-ink-muted: var(--yc-text-muted);
+  --color-yc-link: var(--yc-text-link);
+  --color-yc-page: var(--yc-bg-page);
+  --color-yc-surface: var(--yc-bg-surface);
+  --color-yc-subtle: var(--yc-bg-subtle);
+  --color-yc-hover: var(--yc-bg-hover);
+  --color-yc-selected: var(--yc-bg-selected);
+  --color-yc-row-selected: var(--yc-bg-row-selected);
+  --color-yc-line: var(--yc-border-default);
+  --color-yc-line-strong: var(--yc-border-strong);
+  --color-yc-line-subtle: var(--yc-border-subtle);
+  --color-yc-indigo: var(--yc-accent-indigo);
+  --color-yc-indigo-soft: var(--yc-accent-indigo-soft);
+  --color-yc-focus: var(--yc-accent-focus);
+  --color-yc-green: var(--yc-tone-green);
+  --color-yc-green-soft: var(--yc-tone-green-soft);
+  --color-yc-gold: var(--yc-tone-gold);
+  --color-yc-gold-soft: var(--yc-tone-gold-soft);
+  --color-yc-blue: var(--yc-tone-blue);
+  --color-yc-blue-soft: var(--yc-tone-blue-soft);
+  --color-yc-orange: var(--yc-tone-orange);
+  --color-yc-orange-soft: var(--yc-tone-orange-soft);
+  --color-yc-pink: var(--yc-tone-pink);
+  --color-yc-pink-soft: var(--yc-tone-pink-soft);
+  --color-yc-purple: var(--yc-tone-purple);
+  --color-yc-purple-soft: var(--yc-tone-purple-soft);
+  --shadow-yc-card: var(--yc-shadow-card);
+  --shadow-yc-popover: var(--yc-shadow-popover);
+  /* Geist is loaded by app/yc/layout.tsx */
+  --font-yc-sans: var(--font-yc-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-yc-mono: var(--font-yc-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Base styles the directory was designed against — scoped, never on body. */
+.yc-root {
+  min-height: 100vh;
+  background: var(--yc-bg-page);
+  color: var(--yc-text-primary);
+  font-family: var(--font-yc-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.yc-root .font-yc-mono {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+.yc-card {
+  background: var(--yc-bg-surface);
+  box-shadow: var(--yc-shadow-card);
+  border-radius: 12px;
+}
+.yc-panel {
+  background: var(--yc-bg-surface);
+  border: 1px solid var(--yc-border-default);
+  border-radius: 16px;
+  box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.03), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+.yc-popover {
+  background: var(--yc-bg-surface);
+  box-shadow: var(--yc-shadow-popover);
+  border-radius: 12px;
+}
+.yc-thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.yc-thin-scroll::-webkit-scrollbar-thumb { background: var(--yc-border-strong); border-radius: 999px; }
+.yc-thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* Batch range slider — two overlaid native inputs, only the thumbs take pointer events. */
+.yc-root input[type="range"].dual {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+}
+.yc-root input[type="range"].dual::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid var(--yc-accent-blue);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  cursor: grab;
+}
+.yc-root input[type="range"].dual::-moz-range-thumb {
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid var(--yc-accent-blue);
+  cursor: grab;
+}
+
+@keyframes yc-fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+.yc-fade-in { animation: yc-fade-in 120ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .yc-fade-in { animation: none; }
+}
