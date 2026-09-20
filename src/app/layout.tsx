@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Gasoek_One, Inter } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -37,6 +38,10 @@ export default function RootLayout({
           <style>{`[data-reveal]{opacity:1 !important}`}</style>
         </noscript>
       </body>
+      {/* Google Analytics — satu-satunya root layout, jadi mencakup mal.gg,
+          /bretford/library, dan /yc sekaligus. Komponen resmi Next memuat
+          gtag.js setelah hidrasi supaya tidak mendahului render halaman. */}
+      <GoogleAnalytics gaId="G-Q9W67EZTF7" />
     </html>
   );
 }

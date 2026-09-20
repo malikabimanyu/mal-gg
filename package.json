@@ -9,22 +9,22 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@vemetric/web": "^0.6.1",
+    "@next/third-parties": "^16.3.2",
     "animejs": "^4.5.0",
+    "better-sqlite3": "^13.0.3",
     "next": "16.3.2",
     "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "better-sqlite3": "^13.0.3"
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@types/better-sqlite3": "^9.6.0"
+    "typescript": "^5"
   }
 }
