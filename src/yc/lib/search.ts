@@ -476,7 +476,12 @@ export type FounderDetail = FounderRow & {
     is_hiring: number; batch: string; batch_code: string | null; stage: string | null; location: string | null;
     tags: string[]; logo_url: string | null; long_description: string | null;
   };
-  timeline: Array<{ company_id: number; name: string; slug: string; batch: string; batch_code: string | null; status: string; is_current: number }>;
+  /** Every YC company this person founded (from identity linking), oldest first. */
+  timeline: Array<{
+    company_id: number; founder_id: number | null; name: string; slug: string; batch: string; batch_code: string | null;
+    batch_season: string | null; status: string; is_current: number; one_liner: string | null; industry: string | null;
+    team_size: number | null; location: string | null; logo_url: string | null; is_hiring: number;
+  }>;
   cofounders: Array<{ id: number; name: string; role_bucket: string; x_handle: string | null }>;
   position: { index: number; total: number } | null;
 };
@@ -516,7 +521,10 @@ export function getFounder(id: number, qy?: Query): FounderDetail | null {
   const timeline = tableExists(d, "person_companies") && row.n_companies && row.n_companies > 1
     ? (d
         .prepare(
-          `SELECT pc.company_id, c.name, c.slug, c.batch, c.batch_code, c.status, (c.id = ?) AS is_current
+          `SELECT pc.company_id, c.name, c.slug, c.batch, c.batch_code, c.batch_season, c.status, (c.id = ?) AS is_current,
+                  c.one_liner, c.industry, c.team_size, c.logo_url, c.is_hiring,
+                  COALESCE(c.hq_city || CASE WHEN c.hq_country IS NOT NULL THEN ', ' || c.hq_country ELSE '' END, NULL) AS location,
+                  (SELECT f2.id FROM founders f2 WHERE f2.company_id = c.id AND f2.person_key = f.person_key LIMIT 1) AS founder_id
            FROM person_companies pc JOIN companies c ON c.id = pc.company_id
            JOIN founders f ON f.id = ? AND pc.person_key = f.person_key
            ORDER BY c.batch_rank`,
@@ -548,7 +556,7 @@ export function getFounder(id: number, qy?: Query): FounderDetail | null {
   return { ...row, signals, companyRow, timeline, cofounders, position };
 }
 
-/** Neighbours for the ‹ › stepper in the detail yc-panel. */
+/** Neighbours for the ‹ › stepper in the detail panel. */
 export function neighbourIds(qy: Query, id: number): { prev: number | null; next: number | null } {
   const d = db();
   const where = buildWhere(qy);

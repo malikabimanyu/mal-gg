@@ -199,14 +199,26 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
           {f.timeline.length > 1 ? (
             <ol className="relative grid" style={{ gridTemplateColumns: `repeat(${f.timeline.length}, minmax(0,1fr))` }}>
               <span className="absolute left-1 right-0 top-[3.5px] h-px bg-yc-line" aria-hidden />
-              {f.timeline.map((t) => (
-                <li key={t.company_id} className="relative flex min-w-0 flex-col gap-2 pr-3 pt-5 leading-none">
-                  <span className={`absolute left-0 top-0 size-2 rounded-full ${t.is_current ? "bg-yc-focus" : "bg-yc-line-strong"}`} />
-                  <span className="font-yc-mono text-[10px] font-medium tracking-[-0.1px] text-yc-ink-muted">{t.batch_code ?? t.batch}</span>
-                  <span className={`truncate text-[14px] font-medium ${t.is_current ? "text-yc-link" : "text-yc-ink"}`}>{t.name}</span>
-                  <span className="truncate text-[12px] font-medium tracking-[-0.1px] text-yc-ink-muted">{t.status}{t.is_current ? " · current" : ""}</span>
-                </li>
-              ))}
+              {f.timeline.map((t) => {
+                const body = (
+                  <>
+                    <span className={`absolute left-0 top-0 size-2 rounded-full ${t.is_current ? "bg-yc-focus" : "bg-yc-line-strong"}`} />
+                    <span className="font-yc-mono text-[10px] font-medium tracking-[-0.1px] text-yc-ink-muted">{t.batch_code ?? t.batch}</span>
+                    <span className={`truncate text-[14px] font-medium ${t.is_current ? "text-yc-link" : "text-yc-ink group-hover:text-yc-link"}`}>{t.name}</span>
+                    <span className="truncate text-[12px] font-medium tracking-[-0.1px] text-yc-ink-muted">{t.status}{t.is_current ? " · this entry" : ""}</span>
+                  </>
+                );
+                // Other entries open the same person's founder row at that company.
+                return t.is_current || !t.founder_id ? (
+                  <li key={t.company_id} className="relative flex min-w-0 flex-col gap-2 pr-3 pt-5 leading-none">{body}</li>
+                ) : (
+                  <li key={t.company_id} className="relative min-w-0">
+                    <Link href={toHref({ ...query, peek: t.founder_id })} scroll={false} className="group relative flex min-w-0 flex-col gap-2 pr-3 pt-5 leading-none" title={`Open ${f.name} at ${t.name}`}>
+                      {body}
+                    </Link>
+                  </li>
+                );
+              })}
             </ol>
           ) : null}
         </Section>
@@ -279,6 +291,44 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
               </div>
             ) : null}
           </div>
+
+          {f.timeline.filter((t) => !t.is_current).length ? (
+            <div className="flex flex-col gap-2">
+              <p className="text-[12px] font-medium leading-none tracking-[-0.1px] text-yc-ink-muted">
+                Also founded · {f.timeline.filter((t) => !t.is_current).length} more YC {f.timeline.filter((t) => !t.is_current).length === 1 ? "company" : "companies"}
+              </p>
+              {f.timeline
+                .filter((t) => !t.is_current)
+                .slice()
+                .reverse()
+                .map((t) => {
+                  const card = (
+                    <div className="flex flex-col gap-2.5 rounded-xl border border-yc-line bg-yc-surface p-4 group-hover:bg-yc-hover">
+                      <div className="flex items-center gap-2.5">
+                        <Logo src={t.logo_url} name={t.name} size={24} />
+                        <span className="truncate text-[14px] font-semibold leading-none tracking-[-0.1px] text-yc-ink">{t.name}</span>
+                        <StatusPill status={t.status} />
+                        <BatchPill batch={t.batch} season={t.batch_season} className="ml-auto" />
+                      </div>
+                      {t.one_liner ? <p className="text-[12px] leading-[1.4] text-yc-ink-2">{t.one_liner}</p> : null}
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] font-medium leading-none tracking-[-0.1px] text-yc-ink-muted">
+                        <span className="flex items-center gap-1.5"><Icon name="icon-building" size={14} />{t.industry ?? "—"}</span>
+                        <span className="flex items-center gap-1.5"><Icon name="marker-pin-01" size={14} />{t.location ?? "Unknown"}</span>
+                        <span className="flex items-center gap-1.5"><Icon name="users-01" size={14} />{t.team_size ?? "—"}</span>
+                        {t.founder_id ? <span className="ml-auto flex items-center gap-1 text-yc-link">Open this entry<Icon name="icon-chevron-right" size={12} /></span> : null}
+                      </div>
+                    </div>
+                  );
+                  return t.founder_id ? (
+                    <Link key={t.company_id} href={toHref({ ...query, peek: t.founder_id })} scroll={false} className="group block">
+                      {card}
+                    </Link>
+                  ) : (
+                    <div key={t.company_id}>{card}</div>
+                  );
+                })}
+            </div>
+          ) : null}
         </Section>
       </div>
     </PanelChrome>
