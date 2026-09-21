@@ -50,7 +50,7 @@ function CountChip({ label, count }: { label: string; count: number }) {
   );
 }
 
-const ACTION = "flex h-9 flex-1 items-center justify-center gap-2 rounded-lg bg-white px-3 text-[14px] font-medium leading-none whitespace-nowrap shadow-yc-card";
+const ACTION = "flex h-9 flex-1 items-center justify-center gap-2 rounded-lg bg-white px-3 text-[14px] font-medium leading-none whitespace-nowrap shadow-yc-card max-md:px-2 max-md:text-[12px]";
 
 export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail; query: Query; prev: number | null; next: number | null; counts: Record<string, number> }) {
   const c = f.companyRow;
@@ -61,7 +61,7 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
   return (
     <PanelChrome query={query} prev={prev} next={next} name={f.name} contentKey={f.id}>
       {/* Header — right padding clears the ‹ › stepper that PanelChrome places absolutely. */}
-      <div className="peek-section flex items-center gap-3 px-6 py-5 pr-[92px]">
+      <div className="peek-section flex items-center gap-3 px-6 py-5 pr-[92px] max-md:px-4">
         <Avatar name={f.name} src={f.avatar_url} size={40} />
         <div className="flex min-w-0 flex-1 flex-col gap-1.5 leading-none">
           <h2 className="truncate text-[20px] font-semibold tracking-[-0.1px] text-yc-ink">{f.name}</h2>
@@ -82,7 +82,7 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
       </div>
 
       {/* Actions — full-width grey strip */}
-      <div className="peek-section flex items-center gap-2 border-y border-yc-line-subtle bg-yc-subtle px-6 py-3">
+      <div className="peek-section flex items-center gap-2 border-y border-yc-line-subtle bg-yc-subtle px-6 py-3 max-md:px-3">
         <a
           href={f.x_url ?? undefined}
           target="_blank"
@@ -109,9 +109,9 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
         </p>
       ) : null}
 
-      <div className="flex flex-col gap-6 px-6 pb-6 pt-5">
+      <div className="flex flex-col gap-6 px-6 pb-6 pt-5 max-md:px-4">
         <Section title="PRIMARY INFO">
-          <div className="grid grid-cols-2 gap-x-3 gap-y-0">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-0 max-md:grid-cols-1">
             <Field label="Role">
               <span className="truncate">{roleText}</span>
               {f.role_bucket === "unknown" ? <span className="text-[12px] font-normal text-yc-ink-3 whitespace-nowrap">· not in title</span> : null}
@@ -196,8 +196,9 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
             {s?.exit_declared ? <Chip>Exit mentioned in bio</Chip> : null}
             {!(f.n_companies && f.n_companies > 1) && !s?.serial && !s?.exit_declared ? <Chip>First YC company on record</Chip> : null}
           </div>
+          {/* Desktop keeps one column per company; mobile wraps two per row. */}
           {f.timeline.length > 1 ? (
-            <ol className="relative grid" style={{ gridTemplateColumns: `repeat(${f.timeline.length}, minmax(0,1fr))` }}>
+            <ol className="relative grid md:[grid-template-columns:repeat(var(--cols),minmax(0,1fr))] max-md:grid-cols-2 max-md:gap-y-4" style={{ "--cols": f.timeline.length } as React.CSSProperties}>
               <span className="absolute left-1 right-0 top-[3.5px] h-px bg-yc-line" aria-hidden />
               {f.timeline.map((t) => {
                 const body = (
@@ -244,7 +245,7 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
               ) : null}
             </div>
             {c.one_liner ? <p className="text-[12px] leading-[1.4] text-yc-ink-2">{c.one_liner}</p> : null}
-            <div className="grid grid-cols-2 gap-x-3 gap-y-0 border-t border-yc-line pt-3">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-0 border-t border-yc-line pt-3 max-md:grid-cols-1">
               <Field label="Industry" dense><Icon name="icon-building" size={14} /><span className="truncate">{c.industry ?? "—"}</span></Field>
               <Field label="Website" dense>
                 {c.website ? (
@@ -304,11 +305,11 @@ export function DetailPanel({ f, query, prev, next, counts }: { f: FounderDetail
                 .map((t) => {
                   const card = (
                     <div className="flex flex-col gap-2.5 rounded-xl border border-yc-line bg-yc-surface p-4 group-hover:bg-yc-hover">
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2.5 max-md:flex-wrap">
                         <Logo src={t.logo_url} name={t.name} size={24} />
                         <span className="truncate text-[14px] font-semibold leading-none tracking-[-0.1px] text-yc-ink">{t.name}</span>
                         <StatusPill status={t.status} />
-                        <BatchPill batch={t.batch} season={t.batch_season} className="ml-auto" />
+                        <BatchPill batch={t.batch} season={t.batch_season} className="ml-auto max-md:ml-0 max-md:basis-full max-md:self-start" />
                       </div>
                       {t.one_liner ? <p className="text-[12px] leading-[1.4] text-yc-ink-2">{t.one_liner}</p> : null}
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] font-medium leading-none tracking-[-0.1px] text-yc-ink-muted">

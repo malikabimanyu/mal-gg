@@ -132,7 +132,7 @@ export function PanelChrome({
     <div ref={root} className="fixed inset-0 z-[60]">
       {/* Start invisible; anime.js drives opacity/transform from here (reduced-motion snaps to the end state). */}
       <button aria-label="Close panel" onClick={close} className="peek-scrim absolute inset-0 bg-black/20 backdrop-blur-[1px]" style={{ opacity: 0 }} tabIndex={-1} />
-      <div className="peek-panel absolute right-6 top-6 bottom-6 flex w-[min(720px,calc(100vw-48px))] flex-col will-change-transform" style={{ opacity: 0 }}>
+      <div className="peek-panel absolute right-6 top-6 bottom-6 flex w-[min(720px,calc(100vw-48px))] flex-col will-change-transform max-md:inset-x-2 max-md:bottom-2 max-md:top-2 max-md:w-auto" style={{ opacity: 0 }}>
         <div className="pointer-events-none flex justify-end pb-1.5">
           <button onClick={close} aria-label="Close" className="pointer-events-auto flex size-10 items-center justify-center rounded-full bg-white shadow-yc-popover hover:bg-yc-hover">
             <Icon name="x-close" size={20} />

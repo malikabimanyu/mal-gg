@@ -26,12 +26,12 @@ export function Pagination({ total, pageSize, page: current, unit = "founders" }
   const go = (p: number) => push({ ...query, page: Math.max(1, Math.min(pages, p)) }, { scroll: true });
 
   return (
-    <div className="flex items-center gap-3 border-t border-yc-line-subtle bg-yc-surface px-5 py-3">
-      <p className="min-w-0 flex-1 text-[12px] text-yc-ink-2">
+    <div className="flex items-center gap-3 border-t border-yc-line-subtle bg-yc-surface px-5 py-3 max-md:flex-col max-md:items-stretch max-md:px-4">
+      <p className="min-w-0 flex-1 text-[12px] text-yc-ink-2 max-md:text-center">
         Showing {fmt(from)}–{fmt(to)} of {fmt(total)} {unit}
       </p>
-      <nav className="flex items-center gap-1" aria-label="Pagination">
-        <Btn onClick={() => go(1)} disabled={page === 1} label="First page"><Icon name="chevron-left-double" size={12} /></Btn>
+      <nav className="flex items-center gap-1 max-md:justify-center" aria-label="Pagination">
+        <span className="max-md:hidden"><Btn onClick={() => go(1)} disabled={page === 1} label="First page"><Icon name="chevron-left-double" size={12} /></Btn></span>
         <Btn onClick={() => go(page - 1)} disabled={page === 1} label="Previous page"><Icon name="icon-chevron-left" size={12} /></Btn>
         <Btn onClick={() => go(1)} label="Page 1" active={page === 1}>1</Btn>
         {page > 2 ? <span className="px-1 font-yc-mono text-[12px] text-yc-ink-3">…</span> : null}
@@ -39,7 +39,7 @@ export function Pagination({ total, pageSize, page: current, unit = "founders" }
         {page < pages - 1 ? <span className="px-1 font-yc-mono text-[12px] text-yc-ink-3">…</span> : null}
         {pages > 1 ? <Btn onClick={() => go(pages)} label={`Page ${pages}`} active={page === pages}>{fmt(pages)}</Btn> : null}
         <Btn onClick={() => go(page + 1)} disabled={page === pages} label="Next page"><Icon name="icon-chevron-right" size={12} /></Btn>
-        <Btn onClick={() => go(pages)} disabled={page === pages} label="Last page"><Icon name="chevron-right-double" size={12} /></Btn>
+        <span className="max-md:hidden"><Btn onClick={() => go(pages)} disabled={page === pages} label="Last page"><Icon name="chevron-right-double" size={12} /></Btn></span>
       </nav>
     </div>
   );

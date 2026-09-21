@@ -58,7 +58,7 @@ export function AddFilterPopover({
     <div
       ref={ref}
       role="dialog"
-      className="yc-fade-in absolute left-0 top-[calc(100%+6px)] z-50 w-[460px] rounded-xl border border-yc-line bg-yc-surface shadow-[0_20px_40px_-1px_rgba(0,0,0,.14),0_4px_8px_rgba(0,0,0,.08),0_1px_2px_rgba(0,0,0,.06)]"
+      className="yc-fade-in absolute left-0 top-[calc(100%+6px)] z-50 w-[460px] rounded-xl border border-yc-line bg-yc-surface shadow-[0_20px_40px_-1px_rgba(0,0,0,.14),0_4px_8px_rgba(0,0,0,.08),0_1px_2px_rgba(0,0,0,.06)] max-md:fixed max-md:inset-x-2 max-md:bottom-2 max-md:top-auto max-md:z-[80] max-md:max-h-[85vh] max-md:w-auto max-md:overflow-y-auto"
     >
       {picked ? (
         <OptionEditor facet={FACET_BY_ID[picked]} counts={facets[picked] ?? []} histogram={histogram} onClose={onClose} onBack={facetId ? undefined : () => setPicked(null)} />

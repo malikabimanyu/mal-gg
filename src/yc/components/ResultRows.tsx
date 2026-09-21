@@ -14,7 +14,37 @@ const SEASON_TEXT: Record<string, string> = { Winter: "text-[#3177f0]", Spring: 
 
 export function FounderTable({ rows, query, dense }: { rows: FounderRow[]; query: Query; dense?: boolean }) {
   return (
-    <div className="overflow-x-auto yc-thin-scroll">
+    <>
+    {/* Mobile: one compact row per founder — name, company, role, batch, location, X. */}
+    <ul className="md:hidden">
+      {rows.map((r) => (
+        <li key={r.id}>
+          <Link
+            href={toHref({ ...query, peek: r.id })}
+            scroll={false}
+            className={`flex items-center gap-3 border-b border-yc-line-subtle px-4 py-3 active:bg-yc-hover ${query.peek === r.id ? "bg-yc-row-selected" : ""}`}
+          >
+            <Avatar name={r.name} src={r.avatar_url} size={36} />
+            <span className="flex min-w-0 flex-1 flex-col gap-1.5 leading-none">
+              <span className="flex items-baseline gap-2">
+                <span className="truncate text-[15px] font-medium tracking-[-0.1px] text-yc-ink">{r.name}</span>
+                {r.x_handle ? <span className="shrink-0 font-yc-mono text-[11px] text-yc-ink-3">@{r.x_handle}</span> : null}
+              </span>
+              <span className="truncate text-[12px] tracking-[-0.1px] text-yc-ink-muted">
+                {roleLabel(r.role_bucket, r.title)} · {r.company}
+              </span>
+              <span className="flex items-center gap-2 text-[11px] text-yc-ink-3">
+                <span className={`font-yc-mono font-medium ${SEASON_TEXT[r.batch_season ?? ""] ?? "text-yc-focus"}`}>{r.batch_code ?? r.batch}</span>
+                <span className="truncate">{r.industry ?? "—"}{r.location ? ` · ${r.location.split(",")[0]}` : ""}</span>
+              </span>
+            </span>
+            <Icon name="icon-chevron-right" size={12} />
+          </Link>
+        </li>
+      ))}
+    </ul>
+
+    <div className="overflow-x-auto yc-thin-scroll max-md:hidden">
       <div className={`grid min-w-[1000px] ${COLS} h-12 items-center border-b border-yc-line bg-yc-subtle px-4 text-[12px] font-medium tracking-[-0.1px] text-yc-ink-muted`}>
         <span className="flex size-5 items-center justify-center rounded-lg border border-yc-line-strong bg-yc-surface" aria-hidden />
         {(["FOUNDER", "ROLE", "BATCH", "INDUSTRY", "LOCATION", "TEAM", "X_url"] as const).map((h) => {
@@ -76,6 +106,7 @@ export function FounderTable({ rows, query, dense }: { rows: FounderRow[]; query
         </Link>
       ))}
     </div>
+    </>
   );
 }
 

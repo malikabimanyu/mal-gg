@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col gap-4 px-8 py-8 max-md:px-4">
+    <main className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col gap-4 px-8 py-8 max-md:px-4 max-md:py-5">
       <PageHeader />
       <Suspense>
         <Toolbar filterCount={query.chips.length} />
@@ -39,9 +39,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       <Suspense>
         <ChipBar facets={result.facets} histogram={result.histogram} />
       </Suspense>
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-4 max-md:flex-col max-md:items-stretch">
         <Suspense>
-          <Sidebar data={{ facets: result.facets, histogram: result.histogram, batches: result.batches, coverage: result.coverage }} />
+          <Sidebar data={{ facets: result.facets, histogram: result.histogram, batches: result.batches, coverage: result.coverage, total: result.total }} />
         </Suspense>
         <Results result={result} query={query} relax={relax} />
       </div>

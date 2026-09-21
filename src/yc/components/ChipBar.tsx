@@ -21,8 +21,8 @@ export function ChipBar({ facets, histogram }: { facets: FacetCounts; histogram:
   const chips = query.chips.filter((c) => getFacet(c.field));
 
   return (
-    <div className="flex min-h-8 items-center gap-3">
-      <span className="text-[12px] font-medium tracking-[0.72px] text-yc-ink-muted">ACTIVE</span>
+    <div className="flex min-h-8 items-center gap-3 max-md:flex-wrap">
+      <span className="text-[12px] font-medium tracking-[0.72px] text-yc-ink-muted max-md:hidden">ACTIVE</span>
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
         {chips.map((chip) => {
           const facet = getFacet(chip.field)!;
@@ -68,7 +68,7 @@ export function ChipBar({ facets, histogram }: { facets: FacetCounts; histogram:
           {adding ? <AddFilterPopover facets={facets} histogram={histogram} onClose={() => setAdding(false)} /> : null}
         </div>
       </div>
-      <div className="flex shrink-0 items-center gap-3 text-[12px] leading-none">
+      <div className="flex shrink-0 items-center gap-3 text-[12px] leading-none max-md:basis-full max-md:justify-end">
         <span className="text-yc-ink-2">
           {chips.length} {chips.length === 1 ? "filter" : "filters"}
         </span>

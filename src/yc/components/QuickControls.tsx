@@ -19,7 +19,7 @@ function Pill({ on, onClick, children, tone = "indigo", expanded }: { on: boolea
       aria-pressed={isMenu ? undefined : on}
       aria-haspopup={isMenu ? "menu" : undefined}
       aria-expanded={isMenu ? expanded : undefined}
-      className={`flex h-10 items-center gap-2 rounded-xl border pl-4 pr-3 text-[12px] leading-3 drop-shadow-[0_1px_1px_rgba(15,23,41,0.05)] ${
+      className={`flex h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-xl border pl-4 pr-3 text-[12px] leading-3 drop-shadow-[0_1px_1px_rgba(15,23,41,0.05)] ${
         on ? (tone === "indigo" ? "border-yc-indigo bg-yc-indigo-soft text-yc-indigo" : "border-yc-green bg-yc-green-soft text-yc-green") : "border-yc-line bg-yc-surface text-yc-ink-2 hover:bg-yc-hover"
       }`}
     >
@@ -50,7 +50,7 @@ export function QuickControls({ facets }: { facets: FacetCounts }) {
   }, [menu]);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2 max-md:-mx-4 max-md:flex-nowrap max-md:overflow-x-auto max-md:px-4 max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden">
       <div className="relative" ref={menuRef}>
         <Pill on={!!onx} onClick={() => setMenu((m) => !m)} expanded={menu}>
           <Icon name="icon-x-logo" size={16} />

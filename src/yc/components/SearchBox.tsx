@@ -126,7 +126,7 @@ export function SearchBox() {
   const synonyms = SYNONYMS.filter(([a]) => value.trim() && a.toLowerCase().startsWith(value.trim().toLowerCase().slice(0, 3)));
 
   return (
-    <div ref={boxRef} className="relative min-w-0 flex-1">
+    <div ref={boxRef} className="relative min-w-0 flex-1 max-md:basis-full">
       <div className={`yc-card flex h-9 items-center justify-between py-1 pl-3 pr-2 ${open ? "ring-1 ring-yc-focus" : ""}`}>
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <Icon name="search-md" size={16} />
@@ -164,7 +164,7 @@ export function SearchBox() {
             <Icon name="x-close" size={12} />
           </button>
         ) : null}
-        <kbd className="yc-card flex h-6 items-center gap-1 rounded-lg px-2 font-yc-mono text-[12px] font-medium leading-3 text-yc-ink-muted">
+        <kbd className="yc-card flex h-6 items-center gap-1 rounded-lg px-2 font-yc-mono text-[12px] font-medium leading-3 text-yc-ink-muted max-md:hidden">
           <Icon name="icon-command" size={12} />K
         </kbd>
       </div>
@@ -173,7 +173,7 @@ export function SearchBox() {
         <div
           id="omnibox-listbox"
           role="listbox"
-          className="yc-fade-in absolute left-0 right-0 top-[calc(100%+6px)] z-50 overflow-hidden rounded-xl border border-yc-line bg-yc-surface shadow-[0_20px_40px_-1px_rgba(0,0,0,.14),0_4px_8px_rgba(0,0,0,.08),0_1px_2px_rgba(0,0,0,.06)]"
+          className="yc-fade-in absolute left-0 right-0 top-[calc(100%+6px)] z-50 overflow-hidden rounded-xl border border-yc-line bg-yc-surface shadow-[0_20px_40px_-1px_rgba(0,0,0,.14),0_4px_8px_rgba(0,0,0,.08),0_1px_2px_rgba(0,0,0,.06)] max-md:fixed max-md:inset-x-2 max-md:top-auto max-md:bottom-2 max-md:z-[80] max-md:max-h-[70vh] max-md:overflow-y-auto"
         >
           <div className="p-2">
             <div className="flex h-10 items-center justify-between px-2 leading-none">

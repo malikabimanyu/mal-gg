@@ -9,7 +9,7 @@ const KIND_ICON: Record<Relaxation["kind"], string> = { remove: "x-close", text:
 export function EmptyState({ result, query, relax = [] }: { result: SearchResult; query: Query; relax?: Relaxation[] }) {
   const n = query.chips.length + (query.q ? 1 : 0);
   return (
-    <div className="flex flex-col items-center gap-6 px-12 py-16">
+    <div className="flex flex-col items-center gap-6 px-12 py-16 max-md:px-4 max-md:py-10">
       <span className="flex size-[52px] items-center justify-center rounded-full border border-yc-line bg-yc-subtle">
         <Icon name="search-md" size={20} />
       </span>
@@ -25,7 +25,7 @@ export function EmptyState({ result, query, relax = [] }: { result: SearchResult
 
       <div className="flex w-full max-w-[680px] flex-col gap-2.5">
         {relax.map((r) => (
-          <div key={r.title} className="flex items-center gap-2.5 rounded-xl border border-yc-line-strong bg-yc-surface p-3 shadow-[0_1px_0.75px_rgba(0,0,0,.05)]">
+          <div key={r.title} className="flex items-center gap-2.5 rounded-xl border border-yc-line-strong bg-yc-surface p-3 shadow-[0_1px_0.75px_rgba(0,0,0,.05)] max-md:flex-wrap">
             <Icon name={KIND_ICON[r.kind]} size={20} />
             <div className="flex min-w-0 flex-1 flex-col gap-1.5 leading-none">
               <span className="text-[14px] font-medium leading-none text-yc-ink">{r.title}</span>

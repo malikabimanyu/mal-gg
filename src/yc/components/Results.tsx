@@ -9,7 +9,7 @@ import type { SearchResult, Relaxation } from "@/yc/lib/search";
 export function Results({ result, query, relax = [] }: { result: SearchResult; query: Query; relax?: Relaxation[] }) {
   const view = query.view;
   return (
-    <section className="yc-panel flex min-w-0 flex-1 flex-col overflow-hidden">
+    <section className="yc-panel flex min-w-0 flex-1 flex-col overflow-hidden max-md:w-full">
       <ResultsToolbar result={result} query={query} />
       {result.total === 0 ? (
         <EmptyState result={result} query={query} relax={relax} />
@@ -54,12 +54,12 @@ function ResultsToolbar({ result, query }: { result: SearchResult; query: Query 
     );
   }
   return (
-    <div className="flex h-[52px] items-center justify-between border-b border-yc-line-subtle px-5">
+    <div className="flex h-[52px] items-center justify-between border-b border-yc-line-subtle px-5 max-md:px-4">
       <div className="flex items-center gap-2 leading-none">
         <span className="text-[16px] font-medium tracking-[-0.1px] text-yc-ink">Founders</span>
         <span className="relative flex items-center rounded-lg bg-yc-subtle px-2.5 py-1.5 font-yc-mono text-[12px] font-medium text-yc-focus shadow-[inset_0_0_0_0.8px_rgba(49,119,240,0.4)]">{fmt(result.total)}</span>
       </div>
-      <div className="flex items-center gap-2 text-[12px] font-medium leading-none">
+      <div className="flex items-center gap-2 text-[12px] font-medium leading-none max-md:hidden">
         <span className="text-yc-ink-3">Known for these results</span>
         {(
           [
