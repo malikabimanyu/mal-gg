@@ -48,3 +48,7 @@ next-env.d.ts
 /Game Platform/
 /*.wav
 /*.pdf
+
+# Brainrot Surfers — model GLB mentah dari Sketchfab (CC-BY); versi web dioptimasi oleh
+# scripts/brainrotsurfers-assets.mjs ke public/brainrotsurfers/models/.
+/SUBWAY SURVERS KW/
