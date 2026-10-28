@@ -3,9 +3,6 @@ export const site = {
   title: "Mal — Lead Project Designer",
   description:
     "Lead project designer at Keitoto, a design and development studio I co-founded. Building an AI trading bot on the side.",
-  links: {
-    sayHi: "https://x.com/malikyoloo",
-  },
 } as const;
 
 /** Isi bio persis seperti di Figma. Tiap item = satu paragraf. */
