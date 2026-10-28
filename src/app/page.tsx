@@ -1,4 +1,3 @@
-import { ActionButtons } from "@/components/action-buttons";
 import { BioBlock } from "@/components/bio-block";
 import { CardGame } from "@/components/card-game";
 import { Divider } from "@/components/divider";
@@ -13,9 +12,6 @@ export default function Home() {
         <Reveal className="flex flex-col gap-9 sm:gap-[50px]">
           <div data-reveal>
             <ProfileAvatar />
-          </div>
-          <div data-reveal>
-            <ActionButtons />
           </div>
           <div data-reveal>
             <CardGame />

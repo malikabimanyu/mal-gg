@@ -4,7 +4,6 @@ export const site = {
   description:
     "Lead project designer at Keitoto, a design and development studio I co-founded. Building an AI trading bot on the side.",
   links: {
-    hire: "https://calendly.com/hello-keitoto/30min",
     sayHi: "https://x.com/malikyoloo",
   },
 } as const;
@@ -12,7 +11,7 @@ export const site = {
 /** Isi bio persis seperti di Figma. Tiap item = satu paragraf. */
 export const bio = [
   "I’m Mal,",
-  "I’ve been a lead project designer for nine years at Keitoto, a design and development studio I co-founded. I run a team of 19 people across all roles, design and development included. Basically, I close deals and make sure clients get a fucking great ROI.",
+  "I’ve been a lead project designer for nine years at Keitoto. Head of 19 people across all roles, design and development included. Basically, I make sure clients get a fucking great ROI.",
   "Outside of work I’m into trading, finance, and math. Most of my free time now goes into building an AI trading bot that thinks and trades on its own. It reads the market and makes its own calls. Entries, exits, risk, all handled by the bot, not me.",
 ] as const;
 

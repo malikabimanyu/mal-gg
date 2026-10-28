@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { animate } from "animejs";
 import { XLogo } from "@/components/icons";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -31,23 +30,6 @@ export function ActionButtons() {
 
   return (
     <div className="flex flex-wrap items-start gap-[12px]">
-      <a
-        href={site.links.hire}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={pill}
-        {...handlers}
-      >
-        <Image
-          src="/icons/hire.png"
-          alt=""
-          width={20}
-          height={20}
-          className="size-[20px] object-contain"
-        />
-        Hire Us
-      </a>
-
       <a
         href={site.links.sayHi}
         target="_blank"

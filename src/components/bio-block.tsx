@@ -1,4 +1,5 @@
 import { bio, logosLabel } from "@/lib/site";
+import { ActionButtons } from "@/components/action-buttons";
 import { LogoMarquee } from "@/components/logo-marquee";
 
 export function BioBlock() {
@@ -8,6 +9,7 @@ export function BioBlock() {
         {bio.map((paragraph, i) => (
           <p key={i}>{paragraph}</p>
         ))}
+        <ActionButtons />
         <p className="text-muted">{logosLabel}</p>
       </div>
       {/* Figma memberi jarak 24px ke strip logo, tapi di Figma belum ada
